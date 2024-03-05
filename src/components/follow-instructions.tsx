@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 
-import logoFlexBranco from "../assets/logo-branco.png";
-import imagemPasso01 from "../assets/image-passo-01.svg";
+import logoFlexBranco from "@/assets/logo-branco.png";
+import imagemPasso01 from "@/assets/image-passo-01.svg";
 
 type FollowInstructionsProps = {
   handlePrevStep: () => void;

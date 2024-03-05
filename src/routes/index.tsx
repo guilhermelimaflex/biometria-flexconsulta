@@ -3,7 +3,7 @@ import App from "@/App";
 
 export const router = createBrowserRouter([
   {
-    path: "/:hash",
+    path: "/validacao-biometria/:hash",
     element: <App />,
   },
 ]);

@@ -9,8 +9,6 @@ import { Checkbox } from "./ui/checkbox";
 import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
 
-import logoFlex from "../assets/logo-laranja.png";
-
 const SweetAlert = withReactContent(Swal);
 
 type TermsConsentProps = {
@@ -120,7 +118,11 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
         handleNextStep();
       }
     } catch (error) {
-      console.log(error);
+      SweetAlert.fire({
+        icon: "error",
+        title: "Atenção",
+        text: "Não foi possível pegar sua localização!",
+      });
     } finally {
       setLoadingButton(false);
     }
@@ -162,23 +164,6 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
 
   return (
     <>
-      <div className="flex xl:flex-row flex-col items-center">
-        <div className="flex items-center justify-start">
-          <img
-            className="w-[250px]"
-            src={logoFlex}
-            alt="Logotipo laranja da Flex Consulta"
-          />
-        </div>
-
-        <div className="xl:ml-72">
-          <h1 className="text-3xl font-semibold">TERMO DE CONSENTIMENTO</h1>
-          <h3 className="text-xl xl:text-center mt-1 font-semibold">
-            Nova validação: Biometria Facial
-          </h3>
-        </div>
-      </div>
-
       {loadingGetDriverTerms ? (
         <div className="w-full flex items-center space-x-4">
           <Skeleton className="h-12 w-12 rounded-full" />
