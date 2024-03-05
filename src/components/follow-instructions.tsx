@@ -4,12 +4,10 @@ import logoFlexBranco from "@/assets/logo-branco.png";
 import imagemPasso01 from "@/assets/image-passo-01.svg";
 
 type FollowInstructionsProps = {
-  handlePrevStep: () => void;
   handleNextStep: () => void;
 };
 
 export function FollowInstructions({
-  handlePrevStep,
   handleNextStep,
 }: FollowInstructionsProps) {
   return (
@@ -33,7 +31,7 @@ export function FollowInstructions({
           Vamos tirar uma selfie?
         </h2>
 
-        <div className="flex flex-col items-start mt-5 gap-1">
+        <div className="flex flex-col items-start mt-5 gap-3">
           <h4 className="text-gray-50 text-sm">
             - Com essa foto faremos a validação da sua identidade
           </h4>
@@ -54,14 +52,6 @@ export function FollowInstructions({
           onClick={handleNextStep}
         >
           Iniciar
-        </Button>
-
-        <Button
-          variant="destructive"
-          className="w-60 mt-1"
-          onClick={handlePrevStep}
-        >
-          Voltar
         </Button>
       </div>
     </div>

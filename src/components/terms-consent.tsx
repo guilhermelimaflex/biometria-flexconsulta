@@ -37,14 +37,15 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
   const { coords, isGeolocationAvailable, getPosition } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: true,
-      maximumAge: 10000,
-      timeout: 15000,
+      maximumAge: 0,
+      timeout: Infinity,
     },
-    watchLocationPermissionChange: true,
-    userDecisionTimeout: 5000,
-    suppressLocationOnMount: true,
-    isOptimisticGeolocationEnabled: false,
-    watchPosition: true,
+    watchPosition: false,
+    userDecisionTimeout: undefined,
+    suppressLocationOnMount: false,
+    geolocationProvider: navigator.geolocation,
+    isOptimisticGeolocationEnabled: true,
+    watchLocationPermissionChange: false,
   });
 
   useEffect(() => {
@@ -118,11 +119,7 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
         handleNextStep();
       }
     } catch (error) {
-      SweetAlert.fire({
-        icon: "error",
-        title: "Atenção",
-        text: "Não foi possível pegar sua localização!",
-      });
+      console.log(error);
     } finally {
       setLoadingButton(false);
     }
@@ -174,17 +171,8 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
         </div>
       ) : (
         <>
-          <div className="flex flex-col mt-10">
-            <h3 className="font-semibold">
-              Oi{" "}
-              <span className="text-orange-500 font-bold">
-                {driverTerms?.nome_mot}
-              </span>
-              , foi solicitado uma validação da biometria facial pela seguinte
-              empresa:
-            </h3>
-
-            <div className="flex gap-1 font-bold mt-5">
+          <div className="flex flex-col mt-5">
+            <div className="flex gap-1 font-bold">
               <span>Empresa Solicitante:</span>
               <span>{driverTerms?.empresa}</span>
             </div>
@@ -193,21 +181,11 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
               <span>CNPJ:</span>
               <span>{driverTerms?.cnpj_empresa}</span>
             </div>
-
-            <div className="flex gap-1 font-bold">
-              <span>Usuário Solicitante:</span>
-              <span>{driverTerms?.solicitante}</span>
-            </div>
-
-            <div className="flex gap-1 font-bold">
-              <span>Contato:</span>
-              <span>{driverTerms?.tel_transp}</span>
-            </div>
           </div>
 
-          <ScrollArea className="w-full h-[280px] rounded-md pr-5 mt-7">
+          <ScrollArea className="w-full h-[100px] rounded-md pr-5 pt-2 pb-2 pl-2 mt-7 border-2 border-gray-300">
             <div>
-              <div className="mt-1">
+              <div>
                 <p className="text-justify text-sm">
                   Eu, {driverTerms?.nome_mot}, inscrito no CPF nº
                   {driverTerms?.cpf_mot}, declaro que fui orientado(a) de forma
@@ -419,7 +397,7 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="terms"
-                className="rounded-md"
+                className="rounded-md w-[25px] h-[25px]"
                 checked={
                   permissionsArray.armazenamento_foto_validacao_cnh &&
                   permissionsArray.exibicao_foto_historico_pesquisas &&
@@ -449,7 +427,7 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
               />
               <label
                 htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Aceitar todos
               </label>
@@ -616,16 +594,16 @@ export function TermsConsent({ hash, handleNextStep }: TermsConsentProps) {
               </label>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center gap-2 mt-2">
+            <div className="flex flex-col items-center gap-2 mt-2">
               <Button
-                className="w-full md:w-40"
+                className="w-full"
                 onClick={handleConfirm}
                 disabled={loadingButton}
               >
                 {loadingButton ? "Confirmando..." : "Confirmar"}
               </Button>
               <Button
-                className="w-full md:w-40"
+                className="w-full"
                 variant="outline"
                 onClick={handleCancel}
                 disabled={loadingButton}
