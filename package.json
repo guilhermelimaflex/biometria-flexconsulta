@@ -22,7 +22,6 @@
     "react-dom": "^18.2.0",
     "react-form-stepper": "^2.0.3",
     "react-geolocated": "^4.1.2",
-    "react-multistep": "^5.5.9",
     "react-router-dom": "^6.22.1",
     "react-webcam": "^6.0.1",
     "sweetalert2": "^11.10.5",
